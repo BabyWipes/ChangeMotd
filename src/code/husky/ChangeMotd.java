@@ -28,7 +28,7 @@ public class ChangeMotd extends JavaPlugin implements Listener {
 			public void run() {
 				cur++;
 			}
-		}, (config.getInt("motd-change-interval") * 20), 20L);
+		}, 0L, config.getInt("motd-change-interval") * 20L);
 		
 		getServer().getPluginManager().registerEvents(this,this);
 	}
