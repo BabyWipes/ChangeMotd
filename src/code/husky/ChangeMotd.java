@@ -63,6 +63,6 @@ public class ChangeMotd extends JavaPlugin implements Listener {
 
 	@EventHandler
 	public void onServerListPing(ServerListPingEvent e) {
-		e.setMotd(setMOTD());
+		e.setMotd(ChatColor.translateAlternateColorCodes('&',setMOTD()));
 	}
 }
