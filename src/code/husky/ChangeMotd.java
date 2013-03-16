@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChangeMotd extends JavaPlugin implements Listener {
 
@@ -23,11 +22,14 @@ public class ChangeMotd extends JavaPlugin implements Listener {
 		createConfig();
 		motd = config.getStringList("motd-changeto");
 		len = motd.size();
-		new BukkitRunnable(){
-			public void run(){
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+
+			@Override
+			public void run() {
 				cur++;
 			}
-		}.runTaskLater(this, (config.getInt("motd-change-interval") * 20));
+		}, (config.getInt("motd-change-interval") * 20), 20L);
+		
 		getServer().getPluginManager().registerEvents(this,this);
 	}
 
@@ -50,10 +52,11 @@ public class ChangeMotd extends JavaPlugin implements Listener {
 	}
 
 	private String setMOTD() {
-		if(cur <= len) {
+		if(cur < len) {
 			return motd.get(cur);
-		} else {
+		} else if(cur == len) {
 			cur = 0;
+			return motd.get(cur);
 		}
 		return "Error";
 	}
