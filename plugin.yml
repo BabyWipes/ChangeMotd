@@ -1,0 +1,4 @@
+name: ChangeMotd
+main: code.husky.ChangeMotd
+version: 1.0
+commands:
